@@ -77,6 +77,18 @@ const routes = [
         name: 'RegionList',
         component: () => import('@/views/admin/region/RegionList.vue'),
         meta: { title: '地区管理' }
+      },
+      {
+        path: 'heritage/list',
+        name: 'HeritageList',
+        component: () => import('@/views/admin/heritage/HeritageList.vue'),
+        meta: { title: '非遗项目' }
+      },
+      {
+        path: 'heritage/category',
+        name: 'CategoryList',
+        component: () => import('@/views/admin/heritage/CategoryList.vue'),
+        meta: { title: '非遗分类' }
       }
     ]
   }

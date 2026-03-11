@@ -182,6 +182,47 @@ public class HeritageItemService {
         itemMapper.updateById(item);
     }
 
+    public HeritageItemVO getAdminItemDetail(Long id) {
+        HeritageItem item = itemMapper.selectById(id);
+        if (item == null) {
+            return null;
+        }
+        return convertToVO(item);
+    }
+
+    public void auditItem(Long id, Integer status, String auditReason) {
+        HeritageItem item = itemMapper.selectById(id);
+        if (item == null) {
+            throw new BusinessException("项目不存在");
+        }
+        item.setStatus(status);
+        itemMapper.updateById(item);
+    }
+
+    public void updateRecommend(Long id, Integer isRecommend) {
+        HeritageItem item = itemMapper.selectById(id);
+        if (item == null) {
+            throw new BusinessException("项目不存在");
+        }
+        item.setIsRecommend(isRecommend);
+        itemMapper.updateById(item);
+    }
+
+    @Transactional
+    public void adminDeleteItem(Long id) {
+        HeritageItem item = itemMapper.selectById(id);
+        if (item == null) {
+            throw new BusinessException("项目不存在");
+        }
+        LambdaQueryWrapper<HeritageImage> imageWrapper = new LambdaQueryWrapper<>();
+        imageWrapper.eq(HeritageImage::getHeritageItemId, id);
+        imageMapper.delete(imageWrapper);
+        LambdaQueryWrapper<HeritageVideo> videoWrapper = new LambdaQueryWrapper<>();
+        videoWrapper.eq(HeritageVideo::getHeritageItemId, id);
+        videoMapper.delete(videoWrapper);
+        itemMapper.deleteById(id);
+    }
+
     private void saveImages(Long itemId, List<HeritageImageDTO> images) {
         if (images == null || images.isEmpty()) {
             return;

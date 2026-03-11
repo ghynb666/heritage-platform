@@ -57,4 +57,12 @@ public class HeritageCategoryController {
         categoryService.delete(id);
         return Result.success();
     }
+
+    @ApiOperation("批量更新排序")
+    @PutMapping("/category/sort")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Result<?> updateSort(@RequestBody List<HeritageCategory> categories) {
+        categoryService.updateSort(categories);
+        return Result.success();
+    }
 }

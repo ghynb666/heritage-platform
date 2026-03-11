@@ -43,4 +43,31 @@ public class AdminHeritageController {
         itemService.updateStatus(id, status);
         return Result.success();
     }
+
+    @ApiOperation("项目详情")
+    @GetMapping("/item/{id}")
+    public Result<HeritageItemVO> getItemDetail(@PathVariable Long id) {
+        return Result.success(itemService.getAdminItemDetail(id));
+    }
+
+    @ApiOperation("审核项目")
+    @PutMapping("/item/{id}/audit")
+    public Result<?> auditItem(@PathVariable Long id, @RequestParam Integer status, @RequestParam(required = false) String auditReason) {
+        itemService.auditItem(id, status, auditReason);
+        return Result.success();
+    }
+
+    @ApiOperation("推荐/取消推荐")
+    @PutMapping("/item/{id}/recommend")
+    public Result<?> updateRecommend(@PathVariable Long id, @RequestParam Integer isRecommend) {
+        itemService.updateRecommend(id, isRecommend);
+        return Result.success();
+    }
+
+    @ApiOperation("删除项目")
+    @DeleteMapping("/item/{id}")
+    public Result<?> deleteItem(@PathVariable Long id) {
+        itemService.adminDeleteItem(id);
+        return Result.success();
+    }
 }

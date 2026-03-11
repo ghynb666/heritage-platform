@@ -43,4 +43,13 @@ public class HeritageCategoryService {
     public void delete(Long id) {
         categoryMapper.deleteById(id);
     }
+
+    public void updateSort(List<HeritageCategory> categories) {
+        for (HeritageCategory category : categories) {
+            HeritageCategory entity = new HeritageCategory();
+            entity.setId(category.getId());
+            entity.setSort(category.getSort());
+            categoryMapper.updateById(entity);
+        }
+    }
 }
