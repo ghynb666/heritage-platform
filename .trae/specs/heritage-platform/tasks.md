@@ -15,7 +15,7 @@
 | P4 | 管理员后台-用户管理 | 用户列表、传承人账号、地区管理 | ✅ 已完成 | [tasks.md](P4/tasks.md) | [checklist.md](P4/checklist.md) |
 | P5 | 管理员后台-非遗项目管理 | 项目列表、分类管理、审核 | ✅ 已完成 | [tasks.md](P5/tasks.md) | [checklist.md](P5/checklist.md) |
 | P6 | 管理员后台-文创管理 | 商品列表、类型管理、审核 | ✅ 已完成 | [tasks.md](P6/tasks.md) | [checklist.md](P6/checklist.md) |
-| P7 | 管理员后台-资讯管理 | 公告、轮播图、资讯、论坛 | ⏳ 未开始 | [tasks.md](P7/tasks.md) | [checklist.md](P7/checklist.md) |
+| P7 | 管理员后台-资讯管理 | 公告、轮播图、资讯、论坛 | ✅ 已完成 | [tasks.md](P7/tasks.md) | [checklist.md](P7/checklist.md) |
 | P8 | 管理员后台-数据统计 | 数据统计仪表盘、敏感词管理 | ⏳ 未开始 | [tasks.md](P8/tasks.md) | [checklist.md](P8/checklist.md) |
 | P9 | 前台-非遗详情与传承人主页 | 项目详情、搜索排序、传承人主页 | ⏳ 未开始 | [tasks.md](P9/tasks.md) | [checklist.md](P9/checklist.md) |
 | P10 | 前台-互动功能 | 点赞、收藏、评论、敏感词过滤 | ⏳ 未开始 | [tasks.md](P10/tasks.md) | [checklist.md](P10/checklist.md) |
@@ -42,8 +42,8 @@ P4（用户管理）✅
 ┌───────────────────────────────────────┐
 │  管理员后台（P5-P8，可并行开发）          │
 │  P5（非遗项目管理）✅                    │
-│  P6（文创管理）⏳                        │
-│  P7（资讯管理）⏳                        │
+│  P6（文创管理）✅                        │
+│  P7（资讯管理）✅                        │
 │  P8（数据统计）⏳                        │
 └───────────────────────────────────────┘
     ↓

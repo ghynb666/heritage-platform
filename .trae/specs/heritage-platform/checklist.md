@@ -15,7 +15,7 @@
 | P4 | 管理员后台-用户管理 | 15项 | ✅ 已完成 | [checklist.md](P4/checklist.md) |
 | P5 | 管理员后台-非遗项目管理 | 12项 | ✅ 已完成 | [checklist.md](P5/checklist.md) |
 | P6 | 管理员后台-文创管理 | 12项 | ✅ 已完成 | [checklist.md](P6/checklist.md) |
-| P7 | 管理员后台-资讯管理 | 18项 | ⏳ 未开始 | [checklist.md](P7/checklist.md) |
+| P7 | 管理员后台-资讯管理 | 18项 | ✅ 已完成 | [checklist.md](P7/checklist.md) |
 | P8 | 管理员后台-数据统计 | 10项 | ⏳ 未开始 | [checklist.md](P8/checklist.md) |
 | P9 | 前台-非遗详情与传承人主页 | 17项 | ⏳ 未开始 | [checklist.md](P9/checklist.md) |
 | P10 | 前台-互动功能 | 20项 | ⏳ 未开始 | [checklist.md](P10/checklist.md) |
