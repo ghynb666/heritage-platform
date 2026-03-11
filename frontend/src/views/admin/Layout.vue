@@ -10,6 +10,14 @@
       
       <nav class="sidebar-nav">
         <div class="nav-section">
+          <div class="nav-section-title">数据总览</div>
+          <router-link to="/admin/dashboard" class="nav-item" :class="{ active: $route.path === '/admin/dashboard' }">
+            <span class="nav-icon">统</span>
+            <span class="nav-text">数据统计</span>
+          </router-link>
+        </div>
+
+        <div class="nav-section">
           <div class="nav-section-title">用户管理</div>
           <router-link to="/admin/user/list" class="nav-item" :class="{ active: $route.path === '/admin/user/list' }">
             <span class="nav-icon">众</span>
@@ -123,6 +131,7 @@ const route = useRoute()
 const userStore = useUserStore()
 
 const pageTitles = {
+  '/admin/dashboard': '数据统计',
   '/admin/user/list': '用户列表',
   '/admin/inheritor/list': '传承人账号',
   '/admin/inheritor/audit': '传承人审核',
