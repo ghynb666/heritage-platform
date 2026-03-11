@@ -3,6 +3,7 @@ package com.heritage.vo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserVO {
@@ -21,5 +22,9 @@ public class UserVO {
     private String signature;
     private Long heritageCategoryId;
     private String heritageCategoryName;
+    private Integer status;
     private LocalDateTime createTime;
+    private LocalDateTime lastLoginTime;
+    private List<String> roles;
+    private String roleNames;
 }

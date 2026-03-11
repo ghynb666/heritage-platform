@@ -5,21 +5,22 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.heritage.dto.UserQueryDTO;
 import com.heritage.entity.HeritageCategory;
 import com.heritage.entity.SysUser;
+import com.heritage.entity.SysUserRole;
 import com.heritage.mapper.HeritageCategoryMapper;
 import com.heritage.mapper.UserMapper;
 import com.heritage.mapper.UserRoleMapper;
 import com.heritage.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class InheritorService {
     @Autowired
     private UserMapper userMapper;
 
@@ -29,50 +30,27 @@ public class UserService {
     @Autowired
     private HeritageCategoryMapper heritageCategoryMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public UserVO getUserById(Long id) {
-        SysUser user = userMapper.selectById(id);
-        if (user == null) {
-            return null;
+    public Page<UserVO> getInheritorPage(UserQueryDTO query) {
+        List<Long> inheritorUserIds = userRoleMapper.selectUserIdsByRoleKey("INHERITOR");
+        if (inheritorUserIds.isEmpty()) {
+            return new Page<>();
         }
-        return convertToVO(user);
-    }
 
-    public UserVO getUserDetail(Long id) {
-        return getUserById(id);
-    }
-
-    public List<String> getUserRoles(Long userId) {
-        return userRoleMapper.selectRoleKeysByUserId(userId);
-    }
-
-    public Page<UserVO> getUserPage(UserQueryDTO query) {
         Page<SysUser> page = new Page<>(query.getPage(), query.getSize());
         
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysUser::getId, inheritorUserIds);
         
         if (StringUtils.hasText(query.getKeyword())) {
             wrapper.and(w -> w
                 .like(SysUser::getUsername, query.getKeyword())
                 .or()
                 .like(SysUser::getNickname, query.getKeyword())
-                .or()
-                .like(SysUser::getPhone, query.getKeyword())
             );
         }
         
-        if (query.getStatus() != null) {
-            wrapper.eq(SysUser::getStatus, query.getStatus());
-        }
-        
-        if (StringUtils.hasText(query.getRole())) {
-            List<Long> userIds = userRoleMapper.selectUserIdsByRoleKey(query.getRole());
-            if (userIds.isEmpty()) {
-                return new Page<>();
-            }
-            wrapper.in(SysUser::getId, userIds);
+        if (query.getHeritageCategoryId() != null) {
+            wrapper.eq(SysUser::getHeritageCategoryId, query.getHeritageCategoryId());
         }
         
         wrapper.orderByDesc(SysUser::getCreateTime);
@@ -87,21 +65,35 @@ public class UserService {
         return voPage;
     }
 
-    public void updateUserStatus(Long id, Integer status) {
+    public UserVO getInheritorDetail(Long id) {
+        SysUser user = userMapper.selectById(id);
+        if (user == null) {
+            return null;
+        }
+        return convertToVO(user);
+    }
+
+    @Transactional
+    public void updateCategory(Long id, Long categoryId) {
         SysUser user = new SysUser();
         user.setId(id);
-        user.setStatus(status);
+        user.setHeritageCategoryId(categoryId);
         userMapper.updateById(user);
     }
 
-    public void deleteUser(Long id) {
-        userMapper.deleteById(id);
-    }
+    @Transactional
+    public void revokeInheritor(Long id) {
+        List<Long> roleIds = userRoleMapper.selectRoleIdsByUserId(id);
+        for (Long roleId : roleIds) {
+            LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(SysUserRole::getUserId, id);
+            wrapper.eq(SysUserRole::getRoleId, roleId);
+            userRoleMapper.delete(wrapper);
+        }
 
-    public void resetPassword(Long id) {
         SysUser user = new SysUser();
         user.setId(id);
-        user.setPassword(passwordEncoder.encode("123456"));
+        user.setHeritageCategoryId(null);
         userMapper.updateById(user);
     }
 

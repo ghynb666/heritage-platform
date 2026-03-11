@@ -14,4 +14,12 @@ public interface UserRoleMapper extends BaseMapper<SysUserRole> {
             "INNER JOIN sys_user_role ur ON r.id = ur.role_id " +
             "WHERE ur.user_id = #{userId} AND r.deleted = 0")
     List<String> selectRoleKeysByUserId(@Param("userId") Long userId);
+
+    @Select("SELECT ur.user_id FROM sys_user_role ur " +
+            "INNER JOIN sys_role r ON ur.role_id = r.id " +
+            "WHERE r.role_key = #{roleKey} AND r.deleted = 0")
+    List<Long> selectUserIdsByRoleKey(@Param("roleKey") String roleKey);
+
+    @Select("SELECT ur.role_id FROM sys_user_role ur WHERE ur.user_id = #{userId}")
+    List<Long> selectRoleIdsByUserId(@Param("userId") Long userId);
 }

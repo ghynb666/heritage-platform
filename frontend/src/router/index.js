@@ -71,6 +71,12 @@ const routes = [
         name: 'InheritorAudit',
         component: () => import('@/views/admin/user/InheritorAudit.vue'),
         meta: { title: '传承人审核' }
+      },
+      {
+        path: 'region',
+        name: 'RegionList',
+        component: () => import('@/views/admin/region/RegionList.vue'),
+        meta: { title: '地区管理' }
       }
     ]
   }

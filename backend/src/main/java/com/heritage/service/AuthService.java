@@ -1,21 +1,21 @@
 package com.heritage.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heritage.dto.LoginDTO;
 import com.heritage.dto.RegisterDTO;
-import com.heritage.entity.SysUser;
 import com.heritage.entity.SysRole;
+import com.heritage.entity.SysUser;
 import com.heritage.entity.SysUserRole;
 import com.heritage.exception.BusinessException;
-import com.heritage.mapper.UserMapper;
 import com.heritage.mapper.RoleMapper;
+import com.heritage.mapper.UserMapper;
 import com.heritage.mapper.UserRoleMapper;
 import com.heritage.util.JwtUtil;
 import com.heritage.vo.LoginVO;
 import com.heritage.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +36,9 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public LoginVO register(RegisterDTO dto) {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
@@ -46,7 +49,7 @@ public class AuthService {
 
         SysUser user = new SysUser();
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setNickname(dto.getNickname() != null ? dto.getNickname() : dto.getUsername());
         user.setStatus(1);
         userMapper.insert(user);
@@ -68,7 +71,17 @@ public class AuthService {
         wrapper.eq(SysUser::getUsername, dto.getUsername());
         SysUser user = userMapper.selectOne(wrapper);
 
-        if (user == null || !dto.getPassword().equals(user.getPassword())) {
+        if (user == null) {
+            throw new BusinessException("用户名或密码错误");
+        }
+
+        boolean passwordMatched = passwordEncoder.matches(dto.getPassword(), user.getPassword());
+        if (!passwordMatched && dto.getPassword().equals(user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+            passwordMatched = true;
+        }
+
+        if (!passwordMatched) {
             throw new BusinessException("用户名或密码错误");
         }
 
