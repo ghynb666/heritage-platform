@@ -3,6 +3,7 @@ package com.heritage.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.heritage.common.Result;
 import com.heritage.dto.HeritageItemDTO;
+import com.heritage.service.AccessLogService;
 import com.heritage.service.HeritageItemService;
 import com.heritage.vo.HeritageItemVO;
 import io.swagger.annotations.Api;
@@ -12,12 +13,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Api(tags = "非遗项目接口")
 @RestController
 @RequestMapping("/api/heritage")
 public class HeritageItemController {
     @Autowired
     private HeritageItemService itemService;
+
+    @Autowired
+    private AccessLogService accessLogService;
 
     @ApiOperation("项目列表(分页)")
     @GetMapping("/item/list")
@@ -32,11 +38,15 @@ public class HeritageItemController {
 
     @ApiOperation("项目详情")
     @GetMapping("/item/{id}")
-    public Result<HeritageItemVO> getItemDetail(@PathVariable Long id) {
+    public Result<HeritageItemVO> getItemDetail(@PathVariable Long id,
+                                                Authentication authentication,
+                                                HttpServletRequest request) {
         HeritageItemVO vo = itemService.getItemDetail(id);
         if (vo == null) {
             return Result.error("项目不存在");
         }
+        Long userId = authentication == null ? null : (Long) authentication.getPrincipal();
+        accessLogService.recordAccess("HERITAGE", id, userId, request);
         return Result.success(vo);
     }
 

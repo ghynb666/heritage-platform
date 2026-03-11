@@ -75,6 +75,10 @@
             <span class="nav-icon">言</span>
             <span class="nav-text">留言管理</span>
           </router-link>
+          <router-link to="/admin/sensitive-word" class="nav-item" :class="{ active: $route.path === '/admin/sensitive-word' }">
+            <span class="nav-icon">敏</span>
+            <span class="nav-text">敏感词管理</span>
+          </router-link>
         </div>
       </nav>
     </aside>
@@ -131,7 +135,8 @@ const pageTitles = {
   '/admin/news': '资讯管理',
   '/admin/forum': '论坛管理',
   '/admin/comment': '评论管理',
-  '/admin/message': '留言管理'
+  '/admin/message': '留言管理',
+  '/admin/sensitive-word': '敏感词管理'
 }
 
 const currentPageTitle = computed(() => pageTitles[route.path] || '控制台')

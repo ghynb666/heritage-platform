@@ -137,6 +137,12 @@ const routes = [
         name: 'MessageList',
         component: () => import('@/views/admin/content/MessageList.vue'),
         meta: { title: '留言管理' }
+      },
+      {
+        path: 'sensitive-word',
+        name: 'SensitiveWordList',
+        component: () => import('@/views/admin/content/SensitiveWordList.vue'),
+        meta: { title: '敏感词管理' }
       }
     ]
   }

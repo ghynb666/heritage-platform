@@ -487,3 +487,76 @@ export function replyMessage(id, data) {
     data
   })
 }
+
+export function getStatisticsOverview() {
+  return request({
+    url: '/api/admin/statistics/overview',
+    method: 'get'
+  })
+}
+
+export function getHeritageCategoryDistribution() {
+  return request({
+    url: '/api/admin/statistics/heritage-category-distribution',
+    method: 'get'
+  })
+}
+
+export function getHotContent() {
+  return request({
+    url: '/api/admin/statistics/hot-content',
+    method: 'get'
+  })
+}
+
+export function getStatisticsTrend(params) {
+  return request({
+    url: '/api/admin/statistics/trend',
+    method: 'get',
+    params
+  })
+}
+
+export function getSensitiveWordPage(params) {
+  return request({
+    url: '/api/admin/sensitive-word/page',
+    method: 'get',
+    params
+  })
+}
+
+export function addSensitiveWord(data) {
+  return request({
+    url: '/api/admin/sensitive-word',
+    method: 'post',
+    data
+  })
+}
+
+export function updateSensitiveWord(id, data) {
+  return request({
+    url: `/api/admin/sensitive-word/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteSensitiveWord(id) {
+  return request({
+    url: `/api/admin/sensitive-word/${id}`,
+    method: 'delete'
+  })
+}
+
+export function importSensitiveWord(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return request({
+    url: '/api/admin/sensitive-word/import',
+    method: 'post',
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
