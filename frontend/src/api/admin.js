@@ -188,3 +188,87 @@ export function updateCategorySort(categories) {
     data: categories
   })
 }
+
+export function getProductPage(params) {
+  return request({
+    url: '/api/admin/product/page',
+    method: 'get',
+    params
+  })
+}
+
+export function getProductDetail(id) {
+  return request({
+    url: `/api/admin/product/${id}`,
+    method: 'get'
+  })
+}
+
+export function updateProductStatus(id, status) {
+  return request({
+    url: `/api/admin/product/${id}/status`,
+    method: 'put',
+    params: { status }
+  })
+}
+
+export function updateProductRecommend(id, isRecommend) {
+  return request({
+    url: `/api/admin/product/${id}/recommend`,
+    method: 'put',
+    params: { isRecommend }
+  })
+}
+
+export function deleteProduct(id) {
+  return request({
+    url: `/api/admin/product/${id}`,
+    method: 'delete'
+  })
+}
+
+export function getProductCategoryList() {
+  return request({
+    url: '/api/admin/product/category/list',
+    method: 'get'
+  })
+}
+
+export function getProductCategoryPage(params) {
+  return request({
+    url: '/api/admin/product/category/page',
+    method: 'get',
+    params
+  })
+}
+
+export function addProductCategory(data) {
+  return request({
+    url: '/api/admin/product/category',
+    method: 'post',
+    data
+  })
+}
+
+export function updateProductCategory(data) {
+  return request({
+    url: '/api/admin/product/category',
+    method: 'put',
+    data
+  })
+}
+
+export function deleteProductCategory(id) {
+  return request({
+    url: `/api/admin/product/category/${id}`,
+    method: 'delete'
+  })
+}
+
+export function updateProductCategorySort(categories) {
+  return request({
+    url: '/api/admin/product/category/sort',
+    method: 'put',
+    data: categories
+  })
+}

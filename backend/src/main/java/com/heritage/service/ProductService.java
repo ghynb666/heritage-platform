@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,7 +108,7 @@ public class ProductService {
             }
         }
         if (StringUtils.hasText(product.getImages())) {
-            vo.setImages(List.of(product.getImages().split(",")));
+            vo.setImages(Arrays.asList(product.getImages().split(",")));
         }
         return vo;
     }

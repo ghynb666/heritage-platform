@@ -89,6 +89,18 @@ const routes = [
         name: 'CategoryList',
         component: () => import('@/views/admin/heritage/CategoryList.vue'),
         meta: { title: '非遗分类' }
+      },
+      {
+        path: 'product/list',
+        name: 'ProductList',
+        component: () => import('@/views/admin/product/ProductList.vue'),
+        meta: { title: '鍟嗗搧鍒楄〃' }
+      },
+      {
+        path: 'product/category',
+        name: 'ProductCategoryList',
+        component: () => import('@/views/admin/product/ProductCategoryList.vue'),
+        meta: { title: '鍟嗗搧绫诲瀷' }
       }
     ]
   }
