@@ -1,35 +1,20 @@
-package com.heritage.entity;
+package com.heritage.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
-@TableName("announcement")
-public class Announcement {
-    @TableId(type = IdType.AUTO)
+public class AnnouncementVO {
     private Long id;
-    
     private String title;
-    
     private String content;
-
     private Integer type;
-    
     private Integer status;
-    
     private Integer sort;
-
+    private Integer isTop;
     private LocalDateTime startTime;
-
     private LocalDateTime endTime;
-    
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-    
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
-    @TableLogic
-    private Integer deleted;
 }

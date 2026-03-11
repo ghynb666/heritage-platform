@@ -28,7 +28,7 @@ public class AdminHeritageController {
         return Result.success();
     }
 
-    @ApiOperation("管理列表")
+    @ApiOperation("管理员项目列表")
     @GetMapping("/item/list")
     public Result<Page<HeritageItemVO>> getAdminItemList(
             @RequestParam(defaultValue = "1") Integer page,
@@ -37,27 +37,37 @@ public class AdminHeritageController {
         return Result.success(itemService.getAdminItemList(page, size, status));
     }
 
-    @ApiOperation("上下架")
-    @PutMapping("/item/{id}/status")
-    public Result<?> updateStatus(@PathVariable Long id, @RequestParam Integer status) {
-        itemService.updateStatus(id, status);
-        return Result.success();
-    }
-
     @ApiOperation("项目详情")
     @GetMapping("/item/{id}")
     public Result<HeritageItemVO> getItemDetail(@PathVariable Long id) {
         return Result.success(itemService.getAdminItemDetail(id));
     }
 
+    @ApiOperation("更新项目")
+    @PutMapping("/item/{id}")
+    public Result<?> updateItem(@PathVariable Long id, @RequestBody HeritageItemDTO dto) {
+        itemService.adminUpdateItem(id, dto);
+        return Result.success();
+    }
+
+    @ApiOperation("上下架项目")
+    @PutMapping("/item/{id}/status")
+    public Result<?> updateStatus(@PathVariable Long id, @RequestParam Integer status) {
+        itemService.updateStatus(id, status);
+        return Result.success();
+    }
+
     @ApiOperation("审核项目")
     @PutMapping("/item/{id}/audit")
-    public Result<?> auditItem(@PathVariable Long id, @RequestParam Integer status, @RequestParam(required = false) String auditReason) {
+    public Result<?> auditItem(
+            @PathVariable Long id,
+            @RequestParam Integer status,
+            @RequestParam(required = false) String auditReason) {
         itemService.auditItem(id, status, auditReason);
         return Result.success();
     }
 
-    @ApiOperation("推荐/取消推荐")
+    @ApiOperation("推荐或取消推荐")
     @PutMapping("/item/{id}/recommend")
     public Result<?> updateRecommend(@PathVariable Long id, @RequestParam Integer isRecommend) {
         itemService.updateRecommend(id, isRecommend);

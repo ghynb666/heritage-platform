@@ -190,6 +190,18 @@ public class HeritageItemService {
         return convertToVO(item);
     }
 
+    @Transactional
+    public void adminUpdateItem(Long id, HeritageItemDTO dto) {
+        HeritageItem item = itemMapper.selectById(id);
+        if (item == null) {
+            throw new BusinessException("项目不存在");
+        }
+        BeanUtils.copyProperties(dto, item);
+        item.setId(id);
+        itemMapper.updateById(item);
+
+    }
+
     public void auditItem(Long id, Integer status, String auditReason) {
         HeritageItem item = itemMapper.selectById(id);
         if (item == null) {

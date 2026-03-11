@@ -121,16 +121,14 @@
         <el-descriptions-item label="用户名">{{ currentUser.username }}</el-descriptions-item>
         <el-descriptions-item label="昵称">{{ currentUser.nickname || '-' }}</el-descriptions-item>
         <el-descriptions-item label="性别">{{ getGenderText(currentUser.gender) }}</el-descriptions-item>
-        <el-descriptions-item label="生日">{{ formatDate(currentUser.birthday) }}</el-descriptions-item>
+        <el-descriptions-item label="生日">{{ formatDate(currentUser.birthday) || '-' }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ currentUser.phone || '-' }}</el-descriptions-item>
         <el-descriptions-item label="邮箱">{{ currentUser.email || '-' }}</el-descriptions-item>
         <el-descriptions-item label="地区" :span="2">
           {{ [currentUser.province, currentUser.city, currentUser.area].filter(Boolean).join(' / ') || '-' }}
         </el-descriptions-item>
         <el-descriptions-item label="详细地址" :span="2">{{ currentUser.address || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="非遗分类">
-          {{ currentUser.heritageCategoryName || '-' }}
-        </el-descriptions-item>
+        <el-descriptions-item label="非遗分类">{{ currentUser.heritageCategoryName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="角色">{{ currentUser.roleNames || '-' }}</el-descriptions-item>
         <el-descriptions-item label="状态">
           <el-tag :type="currentUser.status === 1 ? 'success' : 'danger'">
@@ -214,8 +212,39 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="头像 URL">
-              <el-input v-model="editForm.avatar" placeholder="请输入头像 URL" />
+            <el-form-item label="头像">
+              <div class="avatar-upload-row">
+                <el-upload
+                  class="avatar-uploader"
+                  action="#"
+                  :show-file-list="false"
+                  :auto-upload="false"
+                  :limit="1"
+                  accept="image/png,image/jpeg,image/jpg,image/gif"
+                  :on-change="handleAvatarChange"
+                >
+                  <div class="avatar-uploader__trigger">
+                    <img v-if="editForm.avatar" :src="editForm.avatar" alt="avatar" class="avatar-preview" />
+                    <div v-else class="avatar-placeholder">
+                      <span class="avatar-plus">+</span>
+                      <span class="avatar-tip">上传头像</span>
+                    </div>
+                  </div>
+                </el-upload>
+                <div class="avatar-upload__meta">
+                  <div class="avatar-upload__hint">上传后会保存到本地 `uploads/avatar/年/月/日/` 目录。</div>
+                  <div class="avatar-upload__hint">支持 jpg、jpeg、png、gif，大小不超过 5MB。</div>
+                  <el-button
+                    v-if="editForm.avatar"
+                    type="danger"
+                    link
+                    size="small"
+                    @click="clearAvatar"
+                  >
+                    清除头像
+                  </el-button>
+                </div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -251,6 +280,7 @@ import {
   updateUser,
   updateUserStatus
 } from '@/api/admin'
+import { uploadAvatar } from '@/api/upload'
 
 const loading = ref(false)
 const submitLoading = ref(false)
@@ -293,6 +323,11 @@ const editRules = {
   email: [{ type: 'email', message: '请输入正确邮箱', trigger: 'blur' }]
 }
 
+const formatDate = (value) => {
+  if (!value) return ''
+  return String(value).slice(0, 10)
+}
+
 const resetEditForm = () => {
   editingUserId.value = null
   editForm.username = ''
@@ -328,9 +363,38 @@ const fillEditForm = (user) => {
   editForm.heritageCategoryId = user.heritageCategoryId ?? null
 }
 
-const formatDate = (value) => {
-  if (!value) return ''
-  return String(value).slice(0, 10)
+const clearAvatar = () => {
+  editForm.avatar = ''
+}
+
+const validateAvatarFile = (rawFile) => {
+  if (!rawFile) return false
+  const isImage = ['image/jpeg', 'image/png', 'image/gif'].includes(rawFile.type)
+  const isLt5M = rawFile.size / 1024 / 1024 < 5
+  if (!isImage) {
+    ElMessage.error('头像只支持 JPG、PNG、GIF 格式')
+    return false
+  }
+  if (!isLt5M) {
+    ElMessage.error('头像大小不能超过 5MB')
+    return false
+  }
+  return true
+}
+
+const handleAvatarChange = async (file) => {
+  if (!file?.raw) return
+  if (!validateAvatarFile(file.raw)) return
+  submitLoading.value = true
+  try {
+    const res = await uploadAvatar(file.raw)
+    editForm.avatar = res.data || ''
+    ElMessage.success('头像上传成功')
+  } catch {
+    ElMessage.error('头像上传失败')
+  } finally {
+    submitLoading.value = false
+  }
 }
 
 const loadCategories = async () => {
@@ -559,5 +623,85 @@ onMounted(() => {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+}
+
+.avatar-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.avatar-uploader {
+  flex: 0 0 112px;
+}
+
+.avatar-uploader :deep(.el-upload) {
+  width: 112px;
+  height: 112px;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.avatar-uploader__trigger {
+  width: 112px;
+  height: 112px;
+  max-width: 112px;
+  max-height: 112px;
+  border: 1px dashed #dcdfe6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.avatar-uploader__trigger:hover {
+  border-color: var(--el-color-primary);
+}
+
+.avatar-preview {
+  width: 100%;
+  height: 100%;
+  max-width: 112px;
+  max-height: 112px;
+  display: block;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #909399;
+}
+
+.avatar-plus {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.avatar-tip {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.avatar-upload__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.avatar-upload__hint {
+  font-size: 12px;
+  color: #909399;
+  line-height: 1.5;
 }
 </style>

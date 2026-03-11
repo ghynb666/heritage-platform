@@ -120,6 +120,14 @@ export function getHeritageDetail(id) {
   })
 }
 
+export function updateHeritageItem(id, data) {
+  return request({
+    url: `/api/admin/heritage/item/${id}`,
+    method: 'put',
+    data
+  })
+}
+
 export function updateHeritageStatus(id, status) {
   return request({
     url: `/api/admin/heritage/item/${id}/status`,
@@ -278,5 +286,204 @@ export function updateProductCategorySort(categories) {
     url: '/api/admin/product/category/sort',
     method: 'put',
     data: categories
+  })
+}
+
+export function getAnnouncementPage(params) {
+  return request({
+    url: '/api/admin/announcement/page',
+    method: 'get',
+    params
+  })
+}
+
+export function addAnnouncement(data) {
+  return request({
+    url: '/api/admin/announcement',
+    method: 'post',
+    data
+  })
+}
+
+export function updateAnnouncement(data) {
+  return request({
+    url: '/api/admin/announcement',
+    method: 'put',
+    data
+  })
+}
+
+export function deleteAnnouncement(id) {
+  return request({
+    url: `/api/admin/announcement/${id}`,
+    method: 'delete'
+  })
+}
+
+export function updateAnnouncementTop(id, isTop) {
+  return request({
+    url: `/api/admin/announcement/${id}/top`,
+    method: 'put',
+    params: { isTop }
+  })
+}
+
+export function getBannerList() {
+  return request({
+    url: '/api/admin/banner/list',
+    method: 'get'
+  })
+}
+
+export function addBanner(data) {
+  return request({
+    url: '/api/admin/banner',
+    method: 'post',
+    data
+  })
+}
+
+export function updateBanner(data) {
+  return request({
+    url: '/api/admin/banner',
+    method: 'put',
+    data
+  })
+}
+
+export function deleteBanner(id) {
+  return request({
+    url: `/api/admin/banner/${id}`,
+    method: 'delete'
+  })
+}
+
+export function updateBannerSort(data) {
+  return request({
+    url: '/api/admin/banner/sort',
+    method: 'put',
+    data
+  })
+}
+
+export function getNewsPage(params) {
+  return request({
+    url: '/api/admin/news/page',
+    method: 'get',
+    params
+  })
+}
+
+export function getNewsDetail(id) {
+  return request({
+    url: `/api/admin/news/${id}`,
+    method: 'get'
+  })
+}
+
+export function addNews(data) {
+  return request({
+    url: '/api/admin/news',
+    method: 'post',
+    data
+  })
+}
+
+export function updateNews(id, data) {
+  return request({
+    url: `/api/admin/news/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteNews(id) {
+  return request({
+    url: `/api/admin/news/${id}`,
+    method: 'delete'
+  })
+}
+
+export function auditNews(id, status, auditReason) {
+  return request({
+    url: `/api/admin/news/${id}/audit`,
+    method: 'put',
+    params: { status, auditReason }
+  })
+}
+
+export function updateNewsTop(id, isTop) {
+  return request({
+    url: `/api/admin/news/${id}/top`,
+    method: 'put',
+    params: { isTop }
+  })
+}
+
+export function getForumPage(params) {
+  return request({
+    url: '/api/admin/forum/page',
+    method: 'get',
+    params
+  })
+}
+
+export function getForumDetail(id) {
+  return request({
+    url: `/api/admin/forum/${id}`,
+    method: 'get'
+  })
+}
+
+export function deleteForum(id) {
+  return request({
+    url: `/api/admin/forum/${id}`,
+    method: 'delete'
+  })
+}
+
+export function updateForumTop(id, isTop) {
+  return request({
+    url: `/api/admin/forum/${id}/top`,
+    method: 'put',
+    params: { isTop }
+  })
+}
+
+export function getCommentPage(params) {
+  return request({
+    url: '/api/admin/comment/page',
+    method: 'get',
+    params
+  })
+}
+
+export function deleteComment(id) {
+  return request({
+    url: `/api/admin/comment/${id}`,
+    method: 'delete'
+  })
+}
+
+export function getMessagePage(params) {
+  return request({
+    url: '/api/admin/message/page',
+    method: 'get',
+    params
+  })
+}
+
+export function deleteMessage(id) {
+  return request({
+    url: `/api/admin/message/${id}`,
+    method: 'delete'
+  })
+}
+
+export function replyMessage(id, data) {
+  return request({
+    url: `/api/admin/message/${id}/reply`,
+    method: 'post',
+    data
   })
 }

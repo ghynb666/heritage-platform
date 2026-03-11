@@ -67,6 +67,14 @@
             <span class="nav-icon">坛</span>
             <span class="nav-text">论坛管理</span>
           </router-link>
+          <router-link to="/admin/comment" class="nav-item" :class="{ active: $route.path === '/admin/comment' }">
+            <span class="nav-icon">评</span>
+            <span class="nav-text">评论管理</span>
+          </router-link>
+          <router-link to="/admin/message" class="nav-item" :class="{ active: $route.path === '/admin/message' }">
+            <span class="nav-icon">言</span>
+            <span class="nav-text">留言管理</span>
+          </router-link>
         </div>
       </nav>
     </aside>
@@ -121,7 +129,9 @@ const pageTitles = {
   '/admin/announcement': '公告管理',
   '/admin/banner': '轮播图管理',
   '/admin/news': '资讯管理',
-  '/admin/forum': '论坛管理'
+  '/admin/forum': '论坛管理',
+  '/admin/comment': '评论管理',
+  '/admin/message': '留言管理'
 }
 
 const currentPageTitle = computed(() => pageTitles[route.path] || '控制台')

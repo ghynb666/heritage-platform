@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Api(tags = "鍏憡鎺ュ彛")
 @RestController
 @RequestMapping("/api/announcement")
@@ -26,9 +28,10 @@ public class AnnouncementController {
             @RequestParam(required = false) Integer status) {
         Page<Announcement> pageParam = new Page<>(page, size);
         LambdaQueryWrapper<Announcement> wrapper = new LambdaQueryWrapper<>();
-        if (status != null) {
-            wrapper.eq(Announcement::getStatus, status);
-        }
+        LocalDateTime now = LocalDateTime.now();
+        wrapper.eq(Announcement::getStatus, status != null ? status : 1)
+                .and(w -> w.isNull(Announcement::getStartTime).or().le(Announcement::getStartTime, now))
+                .and(w -> w.isNull(Announcement::getEndTime).or().ge(Announcement::getEndTime, now));
         wrapper.orderByAsc(Announcement::getSort)
                 .orderByDesc(Announcement::getCreateTime);
         return Result.success(announcementMapper.selectPage(pageParam, wrapper));

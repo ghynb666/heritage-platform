@@ -94,13 +94,49 @@ const routes = [
         path: 'product/list',
         name: 'ProductList',
         component: () => import('@/views/admin/product/ProductList.vue'),
-        meta: { title: '鍟嗗搧鍒楄〃' }
+        meta: { title: '商品列表' }
       },
       {
         path: 'product/category',
         name: 'ProductCategoryList',
         component: () => import('@/views/admin/product/ProductCategoryList.vue'),
-        meta: { title: '鍟嗗搧绫诲瀷' }
+        meta: { title: '商品类型' }
+      },
+      {
+        path: 'announcement',
+        name: 'AnnouncementList',
+        component: () => import('@/views/admin/content/AnnouncementList.vue'),
+        meta: { title: '公告管理' }
+      },
+      {
+        path: 'banner',
+        name: 'BannerList',
+        component: () => import('@/views/admin/content/BannerList.vue'),
+        meta: { title: '轮播图管理' }
+      },
+      {
+        path: 'news',
+        name: 'NewsList',
+        component: () => import('@/views/admin/content/NewsList.vue'),
+        meta: { title: '资讯管理' }
+      },
+      {
+        path: 'forum',
+        name: 'ForumList',
+        component: () => import('@/views/admin/content/ForumList.vue'),
+        meta: { title: '论坛管理' }
+      },
+      {
+        path: 'comment',
+        name: 'CommentList',
+        component: () => import('@/views/admin/content/CommentList.vue'),
+        meta: { title: '评论管理' }
+      },
+      {
+        path: 'message',
+        name: 'MessageList',
+        component: () => import('@/views/admin/content/MessageList.vue'),
+        meta: { title: '留言管理' }
       }
     ]
   }
