@@ -3,6 +3,7 @@ package com.heritage.controller.admin;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.heritage.common.Result;
 import com.heritage.dto.UserQueryDTO;
+import com.heritage.dto.UserUpdateDTO;
 import com.heritage.service.UserService;
 import com.heritage.vo.UserVO;
 import io.swagger.annotations.Api;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "管理员-用户管理")
+@Api(tags = "管理员用户管理")
 @RestController
 @RequestMapping("/api/admin/user")
 public class AdminUserController {
@@ -30,6 +31,14 @@ public class AdminUserController {
     @PreAuthorize("hasRole('ADMIN')")
     public Result<UserVO> getUserDetail(@PathVariable Long id) {
         return Result.success(userService.getUserDetail(id));
+    }
+
+    @ApiOperation("更新用户信息")
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Result<?> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
+        userService.updateUser(id, dto);
+        return Result.success();
     }
 
     @ApiOperation("禁用/启用用户")

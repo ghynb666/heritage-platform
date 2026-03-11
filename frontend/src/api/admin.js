@@ -15,6 +15,14 @@ export function getUserDetail(id) {
   })
 }
 
+export function updateUser(id, data) {
+  return request({
+    url: `/api/admin/user/${id}`,
+    method: 'put',
+    data
+  })
+}
+
 export function updateUserStatus(id, status) {
   return request({
     url: `/api/admin/user/${id}/status`,
