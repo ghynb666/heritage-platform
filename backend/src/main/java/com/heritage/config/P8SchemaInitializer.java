@@ -31,6 +31,7 @@ public class P8SchemaInitializer implements CommandLineRunner {
                 "UNIQUE KEY uk_sensitive_word_word (word)," +
                 "KEY idx_sensitive_word_status (status)" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        ensureColumnExists("sensitive_word", "remark", "ALTER TABLE sensitive_word ADD COLUMN remark VARCHAR(255) NULL AFTER status");
     }
 
     private void createOrderTables() {
@@ -73,5 +74,18 @@ public class P8SchemaInitializer implements CommandLineRunner {
                 "KEY idx_access_log_create_time (create_time)," +
                 "KEY idx_access_log_user_id (user_id)" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    }
+
+    private void ensureColumnExists(String tableName, String columnName, String alterSql) {
+        Integer count = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM information_schema.COLUMNS " +
+                        "WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?",
+                Integer.class,
+                tableName,
+                columnName
+        );
+        if (count == null || count == 0) {
+            jdbcTemplate.execute(alterSql);
+        }
     }
 }
