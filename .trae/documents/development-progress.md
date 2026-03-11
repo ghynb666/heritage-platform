@@ -14,7 +14,7 @@
 | P1 | 用户认证与授权 | ✅ 已完成 | 100% |
 | P2 | 传承人申请与审核 | ✅ 已完成 | 100% |
 | P3 | 非遗分类与项目展示 | ✅ 已完成 | 100% |
-| P4 | 管理员后台-用户管理 | ⏳ 未开始 | 0% |
+| P4 | 管理员后台-用户管理 | 🔄 进行中 | 50% |
 | P5 | 管理员后台-非遗项目管理 | ⏳ 未开始 | 0% |
 | P6 | 管理员后台-文创管理 | ⏳ 未开始 | 0% |
 | P7 | 管理员后台-资讯管理 | ⏳ 未开始 | 0% |
@@ -144,6 +144,7 @@
 | sys_user | 用户表 | ✅ |
 | sys_role | 角色表 | ✅ |
 | sys_user_role | 用户角色关联表 | ✅ |
+| sys_region | 地区表 | ✅ P4新增 |
 | inheritor_apply | 传承人申请表 | ✅ |
 | heritage_category | 非遗分类表 | ✅ |
 | announcement | 公告表 | ✅ |
@@ -182,12 +183,44 @@
 
 ---
 
-## 待开发功能
+## 进行中功能 (P4)
 
-### P4 - 管理员后台-用户管理 (未开始)
-- [ ] 用户列表管理
-- [ ] 传承人账号管理
-- [ ] 地区管理
+### P4 - 管理员后台-用户管理 (50%)
+
+#### 后端已完成 ✅
+- [x] AdminUserController - 用户管理接口
+  - `GET /api/admin/user/page` - 用户分页列表
+  - `GET /api/admin/user/{id}` - 用户详情
+  - `PUT /api/admin/user/{id}/status` - 禁用/启用
+  - `DELETE /api/admin/user/{id}` - 删除用户
+  - `PUT /api/admin/user/{id}/reset-password` - 重置密码
+- [x] AdminInheritorController - 传承人管理接口
+  - `GET /api/admin/inheritor/page` - 传承人分页列表
+  - `GET /api/admin/inheritor/{id}` - 传承人详情
+  - `PUT /api/admin/inheritor/{id}/category` - 修改非遗类型
+  - `PUT /api/admin/inheritor/{id}/revoke` - 取消传承人资格
+- [x] AdminRegionController - 地区管理接口
+  - `GET /api/admin/region/tree` - 地区树形结构
+  - `POST /api/admin/region` - 新增地区
+  - `PUT /api/admin/region` - 更新地区
+  - `DELETE /api/admin/region/{id}` - 删除地区
+- [x] UserService - 扩展用户服务
+- [x] InheritorService - 传承人服务
+- [x] RegionService - 地区服务
+- [x] UserVO - 用户视图对象
+- [x] RegionVO - 地区视图对象
+- [x] UserQueryDTO - 用户查询DTO
+- [x] SysRegion - 地区实体
+- [x] RegionMapper - 地区Mapper
+
+#### 前端待完成 ⏳
+- [ ] UserList.vue - 完善用户列表页面
+- [ ] InheritorList.vue - 完善传承人列表页面
+- [ ] Region.vue - 新建地区管理页面
+
+---
+
+## 待开发功能
 
 ### P5 - 管理员后台-非遗项目管理 (未开始)
 - [ ] 项目列表管理
