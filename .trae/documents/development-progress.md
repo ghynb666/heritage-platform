@@ -14,7 +14,7 @@
 | P1 | 用户认证与授权 | ✅ 已完成 | 100% |
 | P2 | 传承人申请与审核 | ✅ 已完成 | 100% |
 | P3 | 非遗分类与项目展示 | ✅ 已完成 | 100% |
-| P4 | 管理员后台-用户管理 | 🔄 进行中 | 50% |
+| P4 | 管理员后台-用户管理 | ✅ 已完成 | 100% |
 | P5 | 管理员后台-非遗项目管理 | ⏳ 未开始 | 0% |
 | P6 | 管理员后台-文创管理 | ⏳ 未开始 | 0% |
 | P7 | 管理员后台-资讯管理 | ⏳ 未开始 | 0% |
@@ -28,7 +28,7 @@
 
 ---
 
-## 已完成功能 (P0-P3)
+## 已完成功能 (P0-P4)
 
 ### 一、后端 (SpringBoot 2.7.18)
 
@@ -90,7 +90,27 @@
 #### 8. 公共功能
 - [x] 公告列表接口 `GET /api/announcement/list`
 
-#### 9. 自动初始化
+#### 9. 用户管理 (P4新增)
+- [x] 用户分页列表 `GET /api/admin/user/page`
+- [x] 用户详情 `GET /api/admin/user/{id}`
+- [x] 禁用/启用用户 `PUT /api/admin/user/{id}/status`
+- [x] 删除用户 `DELETE /api/admin/user/{id}`
+- [x] 重置密码 `PUT /api/admin/user/{id}/reset-password`
+
+#### 10. 传承人管理 (P4新增)
+- [x] 传承人分页列表 `GET /api/admin/inheritor/page`
+- [x] 传承人详情 `GET /api/admin/inheritor/{id}`
+- [x] 修改非遗类型 `PUT /api/admin/inheritor/{id}/category`
+- [x] 取消传承人资格 `PUT /api/admin/inheritor/{id}/revoke`
+
+#### 11. 地区管理 (P4新增)
+- [x] 地区实体 `SysRegion`
+- [x] 地区树形结构 `GET /api/admin/region/tree`
+- [x] 新增地区 `POST /api/admin/region`
+- [x] 更新地区 `PUT /api/admin/region`
+- [x] 删除地区 `DELETE /api/admin/region/{id}`
+
+#### 12. 自动初始化
 - [x] 管理员账号自动创建 (admin/admin123)
 - [x] 角色数据自动初始化
 
@@ -117,9 +137,10 @@
 | 传承人申请 | `/inheritor-apply` | 申请表单、资质上传、状态展示 | ✅ |
 | 管理后台布局 | `/admin` | 侧边栏导航、顶部栏 | ✅ |
 | 控制台 | `/admin/dashboard` | 统计卡片、欢迎区 | ✅ |
+| 用户列表 | `/admin/user/list` | 搜索筛选、分页、详情、禁用、删除、重置密码 | ✅ |
+| 传承人列表 | `/admin/inheritor/list` | 搜索筛选、详情、修改类型、取消资格 | ✅ |
 | 传承人审核 | `/admin/inheritor/audit` | 申请列表、详情弹窗、审核操作 | ✅ |
-| 用户列表 | `/admin/user/list` | 基础结构 | ✅ |
-| 传承人列表 | `/admin/inheritor/list` | 基础结构 | ✅ |
+| 地区管理 | `/admin/region` | 树形结构、增删改 | ✅ |
 
 #### 3. 公共组件
 - [x] `AnnouncementScroll.vue` - 公告滚动组件
@@ -180,43 +201,6 @@
 - **配色**: 墨黑、朱砂红、金色、青玉色、宣纸色
 - **字体**: Noto Serif SC 宋体
 - **元素**: 水墨留白、印章图标、书法字间距
-
----
-
-## 进行中功能 (P4)
-
-### P4 - 管理员后台-用户管理 (50%)
-
-#### 后端已完成 ✅
-- [x] AdminUserController - 用户管理接口
-  - `GET /api/admin/user/page` - 用户分页列表
-  - `GET /api/admin/user/{id}` - 用户详情
-  - `PUT /api/admin/user/{id}/status` - 禁用/启用
-  - `DELETE /api/admin/user/{id}` - 删除用户
-  - `PUT /api/admin/user/{id}/reset-password` - 重置密码
-- [x] AdminInheritorController - 传承人管理接口
-  - `GET /api/admin/inheritor/page` - 传承人分页列表
-  - `GET /api/admin/inheritor/{id}` - 传承人详情
-  - `PUT /api/admin/inheritor/{id}/category` - 修改非遗类型
-  - `PUT /api/admin/inheritor/{id}/revoke` - 取消传承人资格
-- [x] AdminRegionController - 地区管理接口
-  - `GET /api/admin/region/tree` - 地区树形结构
-  - `POST /api/admin/region` - 新增地区
-  - `PUT /api/admin/region` - 更新地区
-  - `DELETE /api/admin/region/{id}` - 删除地区
-- [x] UserService - 扩展用户服务
-- [x] InheritorService - 传承人服务
-- [x] RegionService - 地区服务
-- [x] UserVO - 用户视图对象
-- [x] RegionVO - 地区视图对象
-- [x] UserQueryDTO - 用户查询DTO
-- [x] SysRegion - 地区实体
-- [x] RegionMapper - 地区Mapper
-
-#### 前端待完成 ⏳
-- [ ] UserList.vue - 完善用户列表页面
-- [ ] InheritorList.vue - 完善传承人列表页面
-- [ ] Region.vue - 新建地区管理页面
 
 ---
 
