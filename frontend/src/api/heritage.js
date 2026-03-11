@@ -7,6 +7,10 @@ export function getHeritageCategoryList() {
   })
 }
 
+export function getCategoryList() {
+  return getHeritageCategoryList()
+}
+
 export function getHeritageItemList(params) {
   return request({
     url: '/api/heritage/item/list',

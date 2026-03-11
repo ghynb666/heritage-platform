@@ -96,26 +96,3 @@ export function deleteRegion(id) {
     method: 'delete'
   })
 }
-
-export function getRegionTree() {
-  return request({
-    url: '/api/admin/region/tree',
-    method: 'get'
-  })
-}
-
-export function addRegion(data) {
-  return request({
-    url: '/api/admin/region',
-    method: 'post',
-    data
-  })
-}
-
-export function updateRegion(data) {
-  return request({
-    url: '/api/admin/region',
-    method: 'put',
-    data
-  })
-}

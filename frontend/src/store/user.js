@@ -58,7 +58,7 @@ export const useUserStore = defineStore('user', {
       if (this.roles.includes('ADMIN')) {
         router.push('/admin')
       } else if (this.roles.includes('INHERITOR')) {
-        router.push('/inheritor')
+        router.push('/heritage')
       } else {
         router.push('/')
       }
