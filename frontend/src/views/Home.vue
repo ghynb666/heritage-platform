@@ -63,6 +63,10 @@
     </section>
 
     <main class="main-content">
+      <section class="announcement-section">
+        <AnnouncementScroll />
+      </section>
+      
       <section class="section categories">
         <div class="section-header">
           <h2 class="section-title">非遗分类</h2>
@@ -150,6 +154,7 @@
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
+import AnnouncementScroll from '@/components/AnnouncementScroll.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -444,6 +449,10 @@ const handleCommand = (command) => {
   max-width: 1400px;
   margin: 0 auto;
   padding: 80px 40px;
+}
+
+.announcement-section {
+  margin-bottom: 40px;
 }
 
 .section {
