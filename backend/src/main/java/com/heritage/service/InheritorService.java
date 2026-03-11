@@ -83,11 +83,11 @@ public class InheritorService {
 
     @Transactional
     public void revokeInheritor(Long id) {
-        List<Long> roleIds = userRoleMapper.selectRoleIdsByUserId(id);
-        for (Long roleId : roleIds) {
+        Long inheritorRoleId = userRoleMapper.selectRoleIdByRoleKey("INHERITOR");
+        if (inheritorRoleId != null) {
             LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
             wrapper.eq(SysUserRole::getUserId, id);
-            wrapper.eq(SysUserRole::getRoleId, roleId);
+            wrapper.eq(SysUserRole::getRoleId, inheritorRoleId);
             userRoleMapper.delete(wrapper);
         }
 

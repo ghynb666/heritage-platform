@@ -88,6 +88,10 @@ public class UserService {
     }
 
     public void updateUserStatus(Long id, Integer status) {
+        List<String> roles = userRoleMapper.selectRoleKeysByUserId(id);
+        if (roles.contains("ADMIN")) {
+            throw new RuntimeException("不能禁用管理员账号");
+        }
         SysUser user = new SysUser();
         user.setId(id);
         user.setStatus(status);
@@ -95,6 +99,13 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+        List<String> roles = userRoleMapper.selectRoleKeysByUserId(id);
+        if (roles.contains("ADMIN")) {
+            throw new RuntimeException("不能删除管理员账号");
+        }
+        LambdaQueryWrapper<com.heritage.entity.SysUserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(com.heritage.entity.SysUserRole::getUserId, id);
+        userRoleMapper.delete(wrapper);
         userMapper.deleteById(id);
     }
 
