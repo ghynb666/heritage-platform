@@ -16,7 +16,6 @@ import com.heritage.vo.LoginVO;
 import com.heritage.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,9 +34,6 @@ public class AuthService {
     private UserRoleMapper userRoleMapper;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private JwtUtil jwtUtil;
 
     @Transactional
@@ -50,7 +46,7 @@ public class AuthService {
 
         SysUser user = new SysUser();
         user.setUsername(dto.getUsername());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setPassword(dto.getPassword());
         user.setNickname(dto.getNickname() != null ? dto.getNickname() : dto.getUsername());
         user.setStatus(1);
         userMapper.insert(user);
@@ -72,7 +68,7 @@ public class AuthService {
         wrapper.eq(SysUser::getUsername, dto.getUsername());
         SysUser user = userMapper.selectOne(wrapper);
 
-        if (user == null || !passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+        if (user == null || !dto.getPassword().equals(user.getPassword())) {
             throw new BusinessException("用户名或密码错误");
         }
 

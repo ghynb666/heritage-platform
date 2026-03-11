@@ -6,7 +6,7 @@ INSERT INTO `sys_role` (`role_name`, `role_key`, `description`, `status`) VALUES
 ('管理员', 'ADMIN', '管理员角色', 1);
 
 INSERT INTO `sys_user` (`username`, `password`, `nickname`, `status`) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EH', '管理员', 1);
+('admin', 'admin123', '管理员', 1);
 
 INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES (1, 3);
 
