@@ -21,6 +21,18 @@ const routes = [
     meta: { title: '首页' }
   },
   {
+    path: '/heritage',
+    name: 'Heritage',
+    component: () => import('@/views/heritage/Heritage.vue'),
+    meta: { title: '非遗展示' }
+  },
+  {
+    path: '/heritage/:id',
+    name: 'HeritageDetail',
+    component: () => import('@/views/heritage/HeritageDetail.vue'),
+    meta: { title: '非遗详情' }
+  },
+  {
     path: '/inheritor-apply',
     name: 'InheritorApply',
     component: () => import('@/views/user/InheritorApply.vue'),

@@ -27,9 +27,12 @@ public class SecurityConfig {
                 .antMatchers(
                         "/api/auth/**",
                         "/api/heritage/category/list",
+                        "/api/heritage/item/list",
+                        "/api/heritage/item/*",
+                        "/api/heritage/item/search",
                         "/api/announcement/list",
                         "/api/announcement/*",
-                        "/upload/**",
+                        "/uploads/**",
                         "/doc.html",
                         "/webjars/**",
                         "/swagger-resources/**",
